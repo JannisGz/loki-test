@@ -1,0 +1,66 @@
+# Deployments for the log-creator app. Includes three deployments of the image.
+# Each deployment creates one pod with different intervals between generated log entries.
+# The first version creates one log entry per second, the second version one entry every 0.1 seconds and the last version 100 log entries per second.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-creator-deployment
+  labels:
+    app: log-creator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-creator
+  template:
+    metadata:
+      labels:
+        app: log-creator
+    spec:
+      containers:
+      - name: log-creator
+        image: jannisgz/log-creator:latest
+        args: ["1.0"]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-creator-deployment-2
+  labels:
+    app: log-creator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-creator
+  template:
+    metadata:
+      labels:
+        app: log-creator
+    spec:
+      containers:
+      - name: log-creator
+        image: jannisgz/log-creator:latest
+        args: ["0.1"]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-creator-deployment-3
+  labels:
+    app: log-creator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-creator
+  template:
+    metadata:
+      labels:
+        app: log-creator
+    spec:
+      containers:
+      - name: log-creator
+        image: jannisgz/log-creator:latest
+        args: ["0.01"]
